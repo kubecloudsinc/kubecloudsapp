@@ -3,10 +3,11 @@ package io.kubecloudsinc.kubecloudsapp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-//@ComponentScan(basePackages = "io.kubecloudsinc.kubecloudsapp")
+@ComponentScan(basePackages = "io.kubecloudsinc.kubecloudsapp")
 @EnableJpaRepositories(basePackages = {"io.kubecloudsinc.kubecloudsapp.repository"})
 @EntityScan(basePackages = {"io.kubecloudsinc.kubecloudsapp.model"})
 public class KubecloudsappApplication {
