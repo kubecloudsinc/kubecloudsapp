@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Country implements Serializable {
     @Id
     @Column(name = "COUNTRY_ID")
-    private Integer countryId;
+    private String countryId;
     @Column(name = "COUNTRY_NAME")
     private String countryName;
     @Column(name = "REGION_ID")
