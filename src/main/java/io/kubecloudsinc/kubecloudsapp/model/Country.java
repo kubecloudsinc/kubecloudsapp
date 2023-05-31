@@ -3,10 +3,7 @@ package io.kubecloudsinc.kubecloudsapp.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -20,4 +17,8 @@ public class Country implements Serializable {
     private String countryName;
     @Column(name = "REGION_ID")
     private Integer regionId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "REGION_ID", referencedColumnName = "REGION_ID", insertable = false, updatable = false)
+    private Region region;
 }
