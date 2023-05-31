@@ -13,6 +13,12 @@ The following repo contains APIs for retrieving data from HR database.
 ## Running the application
 1. mvn install:install-file -Dfile=\location\of\this\jar\ojdbc8.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=19.3 -Dpackaging=jar
 2. mvn clean install
+3. This is a spring boot application. You need to run the main class annotated with @SpringBootApplication.
+4. Run the KubecloudsappApplication.
+5. You should see the confirmation in logs 
+   2023-05-31 00:13:15.684  INFO 12012 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+   2023-05-31 00:13:15.776  INFO 12012 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 18080 (http) with context path ''
+   2023-05-31 00:13:15.811  INFO 12012 --- [           main] i.k.k.KubecloudsappApplication           : Started KubecloudsappApplication in 16.966 seconds (JVM running for 18.631)
 
 
 ## Testing
