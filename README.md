@@ -24,7 +24,12 @@ The following repo contains APIs for retrieving data from HR database.
 ## Testing
 1. The application by default uses port 18080
 2. For sanity testing, check status localhost:1808/actuator/health, this should show up.
-3. localhost:1808/employee/ -- should give you list of employees.
-4. localhost:1808/employee/101 -- should give you single employee details.
-5. you can use postman to test these apis. 
+3. you can use postman to test these apis.
+4. localhost:1808/employee/ -- should give you list of employees.
+5. localhost:1808/employee/101 -- should give you single employee details.
+6. http://localhost:18080/region/ -- regions
+7. http://localhost:18080/location/ -- locations
+8. http://localhost:18080/country/ -- countries
+9. http://localhost:18080/department/ -- departments
+
 
