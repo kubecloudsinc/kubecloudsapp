@@ -5,13 +5,14 @@ The following repo contains APIs for retrieving data from HR database.
 
 ## Pre-Requisites
 1. Clone this repository https://github.com/kubecloudsinc/kubecloudsapp.git, branch-1
-2. Require OJDBC8.jar, find it in the resources folder. Rename it from ojdbc8.bat to ojdbc8.jar  
+2. Require OJDBC8.jar, find it in the resources folder. Rename it from ojdbc8.bat to ojdbc8.jar
 3. Have maven installed
 4. Have java 8 or above.
 
 
 ## Running the application
-1. mvn clean install
+1. mvn install:install-file -Dfile=\location\of\this\jar\ojdbc8.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=19.3 -Dpackaging=jar
+2. mvn clean install
 
 
 ## Testing
