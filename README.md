@@ -8,6 +8,7 @@ The following repo contains APIs for retrieving data from HR database.
 2. Require OJDBC8.jar, find it in the resources folder. Rename it from ojdbc8.bat to ojdbc8.jar
 3. Have maven installed
 4. Have java 8 or above.
+5. If you running branch-2 or above, it requires java 11 or above.
 
 
 ## Running the application
@@ -31,5 +32,17 @@ The following repo contains APIs for retrieving data from HR database.
 7. http://localhost:18080/location/ -- locations
 8. http://localhost:18080/country/ -- countries
 9. http://localhost:18080/department/ -- departments
+
+branch 2 and above:
+    /api/country
+    /api/country/{countryId}
+    /api/employee
+    /api/employee/{employeeId}
+    /api/location
+    /api/location/{locationId}
+    /api/region
+    /api/region/{regionId}
+    /api/department
+    /api/department/{departmentId}
 
 
