@@ -19,7 +19,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Country getCountry(int countryId) {
+    public Country getCountry(String countryId) {
         return countryRepository.findById(countryId).isPresent() ? countryRepository.findById(countryId).get() : new Country();
     }
 }

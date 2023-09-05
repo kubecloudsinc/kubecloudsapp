@@ -44,7 +44,7 @@ public class RootController {
     }
 
     @GetMapping(path="country/{countryId}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<CountryDTO> getCountryById(@PathVariable int countryId) {
+    public Mono<CountryDTO> getCountryById(@PathVariable String countryId) {
         return Mono.just(modelMapper.map(countryService.getCountry(countryId), CountryDTO.class));
     }
 
