@@ -8,9 +8,6 @@ import java.io.Serializable;
 @Entity
 @Data
 @Table(name = "LOCATIONS")
-/*@SecondaryTables({
-        @SecondaryTable(name="COUNTRIES" , pkJoinColumns = @PrimaryKeyJoinColumn(name = "COUNTRY_ID"))
-})*/
 public class Location implements Serializable {
 
     @Id
@@ -24,14 +21,8 @@ public class Location implements Serializable {
     private String stateProvince;
     @Column(name = "STREET_ADDRESS")
     private String streetAddress;
-    //@Column(table = "COUNTRIES", name = "COUNTRY_ID", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "COUNTRY_ID", referencedColumnName = "COUNTRY_ID")
     private Country country;
-
-    /*@ManyToOne
-    @JoinColumn(name = "COUNTRY_ID", referencedColumnName = "COUNTRY_ID", insertable = false, updatable = false)
-    private Country country;*/
-
 
 }
