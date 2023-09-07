@@ -14,7 +14,5 @@ public class DepartmentDTO {
     String departmentName;
     @JsonProperty("locationId")
     Integer locationId;
-    @JsonProperty("managerId")
-    Integer managerId;
 
 }

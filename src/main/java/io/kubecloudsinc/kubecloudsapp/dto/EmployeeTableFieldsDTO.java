@@ -1,24 +1,32 @@
 package io.kubecloudsinc.kubecloudsapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeTableFieldsDTO {
-    @JsonProperty("firstName")
-    private String firstName;
+    @JsonProperty("employeeId")
+    String employeeId;
+    @JsonProperty("employeeName")
+    String employeeName;
+    @JsonProperty("employeeSalary")
+    String employeeSalary;
     @JsonProperty("job")
-    private JobDTO job;
+    JobDTO job;
     @JsonProperty("jobHistory")
-    private List<JobHistoryDTO> jobHistory;
+    List<JobHistoryDTO> jobHistory;
     @JsonProperty("manager")
-    private ManagerDTO manager;
+    ManagerDTO manager;
     @JsonProperty("department")
-    private DepartmentDTO department;
+    DepartmentDTO department;
 }
 
 

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class JobDTO {
-    @JsonProperty("jobId") private String jobId;
-    @JsonProperty("title") private String title;
+    @JsonProperty("jobId")  String jobId;
+    @JsonProperty("jobTitle")  String jobTitle;
 
 }

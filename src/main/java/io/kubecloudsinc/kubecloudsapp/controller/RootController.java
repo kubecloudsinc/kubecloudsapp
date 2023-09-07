@@ -24,7 +24,8 @@ public class RootController {
     private final LocationServiceImpl locationService;
     private final RegionServiceImpl regionService;
 
-    private ModelMapper modelMapper;
+
+    private final ModelMapper modelMapper;
 
     @GetMapping(path="employee",produces = MediaType.APPLICATION_JSON_VALUE)
     public Flux<EmployeeDTO> getAllEmployees() {
@@ -36,6 +37,12 @@ public class RootController {
     public Mono<EmployeeDTO> getEmployeeById(@PathVariable int employeeId) {
         return Mono.just(modelMapper.map(employeeService.getEmployee(employeeId), EmployeeDTO.class));
     }
+
+    @GetMapping(path="employee/{employeeId}/profile",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Flux<EmployeeTableFieldsDTO> getEmployeeProfile(@PathVariable int employeeId) {
+        return Flux.fromIterable(employeeService.getEmployeeProfile(employeeId));
+    }
+
 
     @GetMapping(path="country",produces = MediaType.APPLICATION_JSON_VALUE)
     public Flux<CountryDTO> getAllCountries() {
@@ -80,6 +87,7 @@ public class RootController {
     public Mono<RegionDTO> getRegionById(@PathVariable int regionId) {
         return Mono.just(modelMapper.map(regionService.getRegion(regionId), RegionDTO.class));
     }
+
 
 
 }

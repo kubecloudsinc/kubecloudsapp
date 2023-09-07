@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 public class ManagerDTO {
     @JsonProperty("managerId")
-    private String managerId;
+    String managerId;
     @JsonProperty("managerFirst")
-    private String managerFirst;
+    String managerFirst;
     @JsonProperty("managerLast")
-    private String managerLast;
+    String managerLast;
 }
