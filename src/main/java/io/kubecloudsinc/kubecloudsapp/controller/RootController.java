@@ -3,6 +3,7 @@ package io.kubecloudsinc.kubecloudsapp.controller;
 import io.kubecloudsinc.kubecloudsapp.dto.*;
 import io.kubecloudsinc.kubecloudsapp.service.impl.*;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/")
 @AllArgsConstructor
+@Slf4j
 public class RootController {
     private final EmployeeServiceImpl employeeService;
     private final CountryServiceImpl countryService;
@@ -35,6 +37,7 @@ public class RootController {
 
     @GetMapping(path="employee/{employeeId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<EmployeeDTO> getEmployeeById(@PathVariable int employeeId) {
+        log.info("getting employee by id {}", employeeId);
         return Mono.just(modelMapper.map(employeeService.getEmployee(employeeId), EmployeeDTO.class));
     }
 
