@@ -42,8 +42,8 @@ public class RootController {
     }
 
     @GetMapping(path="employee/{employeeId}/profile",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Flux<EmployeeTableFieldsDTO> getEmployeeProfile(@PathVariable int employeeId) {
-        return Flux.fromIterable(employeeService.getEmployeeProfile(employeeId));
+    public Mono<EmployeeTableFieldsDTO> getEmployeeProfile(@PathVariable int employeeId) {
+        return Mono.just(employeeService.getEmployeeProfile(employeeId));
     }
 
 

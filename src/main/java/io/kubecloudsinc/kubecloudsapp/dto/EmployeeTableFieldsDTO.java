@@ -20,7 +20,7 @@ public class EmployeeTableFieldsDTO {
     @JsonProperty("employeeSalary")
     String employeeSalary;
     @JsonProperty("job")
-    JobDTO job;
+    List<JobDTO> job;
     @JsonProperty("jobHistory")
     List<JobHistoryDTO> jobHistory;
     @JsonProperty("manager")

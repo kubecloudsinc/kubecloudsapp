@@ -10,5 +10,5 @@ public interface EmployeeService {
 
     Employee getEmployee(int id);
 
-    List<EmployeeTableFieldsDTO> getEmployeeProfile(int employeeId);
+    EmployeeTableFieldsDTO getEmployeeProfile(int employeeId);
 }
