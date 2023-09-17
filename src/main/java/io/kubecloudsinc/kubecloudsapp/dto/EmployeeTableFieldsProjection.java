@@ -1,5 +1,4 @@
 package io.kubecloudsinc.kubecloudsapp.dto;
-import java.util.List;
 
 public interface EmployeeTableFieldsProjection {
     String getEmployeeId();
@@ -16,5 +15,4 @@ public interface EmployeeTableFieldsProjection {
     Integer getDepartmentId();
     String getDepartmentName();
     Integer getLocationId();
-    List<JobHistoryDTO> getJobHistory();
 }
