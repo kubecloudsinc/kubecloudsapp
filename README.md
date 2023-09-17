@@ -34,15 +34,15 @@ The following repo contains APIs for retrieving data from HR database.
 9. http://localhost:18080/department/ -- departments
 
 branch 2 and above:
-    /api/country
-    /api/country/{countryId}
-    /api/employee
-    /api/employee/{employeeId}
-    /api/location
-    /api/location/{locationId}
-    /api/region
-    /api/region/{regionId}
-    /api/department
-    /api/department/{departmentId}
+1.     /api/country
+2.     /api/country/{countryId}
+3.     /api/employee
+4.     /api/employee/{employeeId}
+5.     /api/location
+6.     /api/location/{locationId}
+7.     /api/region
+8.     /api/region/{regionId}
+9.     /api/department
+10.     /api/department/{departmentId}
 
 

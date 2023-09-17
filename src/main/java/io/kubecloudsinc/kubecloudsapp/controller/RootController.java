@@ -3,6 +3,7 @@ package io.kubecloudsinc.kubecloudsapp.controller;
 import io.kubecloudsinc.kubecloudsapp.dto.*;
 import io.kubecloudsinc.kubecloudsapp.service.impl.*;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/")
 @AllArgsConstructor
+@Slf4j
 public class RootController {
     private final EmployeeServiceImpl employeeService;
     private final CountryServiceImpl countryService;
@@ -24,7 +26,8 @@ public class RootController {
     private final LocationServiceImpl locationService;
     private final RegionServiceImpl regionService;
 
-    private ModelMapper modelMapper;
+
+    private final ModelMapper modelMapper;
 
     @GetMapping(path="employee",produces = MediaType.APPLICATION_JSON_VALUE)
     public Flux<EmployeeDTO> getAllEmployees() {
@@ -34,8 +37,15 @@ public class RootController {
 
     @GetMapping(path="employee/{employeeId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<EmployeeDTO> getEmployeeById(@PathVariable int employeeId) {
+        log.info("getting employee by id {}", employeeId);
         return Mono.just(modelMapper.map(employeeService.getEmployee(employeeId), EmployeeDTO.class));
     }
+
+    @GetMapping(path="employee/{employeeId}/profile",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<EmployeeTableFieldsDTO> getEmployeeProfile(@PathVariable int employeeId) {
+        return Mono.just(employeeService.getEmployeeProfile(employeeId));
+    }
+
 
     @GetMapping(path="country",produces = MediaType.APPLICATION_JSON_VALUE)
     public Flux<CountryDTO> getAllCountries() {
@@ -80,6 +90,7 @@ public class RootController {
     public Mono<RegionDTO> getRegionById(@PathVariable int regionId) {
         return Mono.just(modelMapper.map(regionService.getRegion(regionId), RegionDTO.class));
     }
+
 
 
 }
