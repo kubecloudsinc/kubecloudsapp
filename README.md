@@ -44,5 +44,8 @@ branch 2 and above:
 8.     /api/region/{regionId}
 9.     /api/department
 10.     /api/department/{departmentId}
+11. /employee - POST to add new employee, make sure to add id manually
+12. http://localhost:18080/employee/100 - PUT to update employee with ID 100
+
 
 
