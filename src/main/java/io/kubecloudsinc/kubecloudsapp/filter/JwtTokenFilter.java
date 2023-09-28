@@ -1,64 +1,77 @@
 package io.kubecloudsinc.kubecloudsapp.filter;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
-import io.kubecloudsinc.kubecloudsapp.service.JwtTokenService;
-import lombok.AllArgsConstructor;
+import io.kubecloudsinc.kubecloudsapp.service.CustomUserDetailService;
+import io.kubecloudsinc.kubecloudsapp.service.CustomUserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 
 @Component
-@AllArgsConstructor
-public class JwtTokenFilter extends BasicAuthenticationFilter {
-    private final JwtTokenService jwtTokenService;
+public class JwtTokenFilter extends OncePerRequestFilter {
 
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
+    @Autowired
+    private CustomUserDetailService userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws IOException, ServletException {
-        String token = extractToken(request);
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain) throws ServletException, IOException {
 
-        if (token != null && validateToken(token)) {
-            Authentication authentication = createAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        final String requestTokenHeader = request.getHeader("Authorization");
+
+        String username = null;
+        String jwtToken = null;
+
+        // JWT Token is in the form "Bearer token". Remove "Bearer" word and get the token
+        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+            jwtToken = requestTokenHeader.substring(7);
+            try {
+                username = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwtToken).getBody().getSubject();
+            } catch (SignatureException | MalformedJwtException | ExpiredJwtException e) {
+                // Handle invalid or expired tokens here
+                logger.error("JWT validation error: " + e.getMessage());
+            }
         }
 
-        filterChain.doFilter(request, response);
-    }
+        // Once we get the token, validate it and load user details
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(username);
 
-    private String extractToken(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        if (header != null && header.startsWith("Bearer ")) {
-            return header.substring(7);
+            if (userDetails != null) {
+                // Validate token and set up the Authentication object
+                if (validateToken(jwtToken, userDetails)) {
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
         }
-        return null;
+        chain.doFilter(request, response);
     }
 
-    private boolean validateToken(String token) {
-        try {
-            return jwtTokenService.validateToken(token);
-        } catch (MalformedJwtException | SignatureException e) {
-            return false;
-        }
+    private boolean validateToken(String token, CustomUserDetails userDetails) {
+     /*TODO:: implement logic*/
+        return true;
     }
-
-    private Authentication createAuthentication(String token) {
-        String username = jwtTokenService.extractUsername(token);
-        if (username != null) {
-            return new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
-        }
-        return null;
-    }
-
-
 }
+

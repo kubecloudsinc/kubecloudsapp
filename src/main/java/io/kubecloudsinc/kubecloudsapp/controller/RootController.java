@@ -6,10 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -44,6 +42,12 @@ public class RootController {
     @GetMapping(path="employee/{employeeId}/profile",produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<EmployeeTableFieldsDTO> getEmployeeProfile(@PathVariable int employeeId) {
         return Mono.just(employeeService.getEmployeeProfile(employeeId));
+    }
+
+    @PostMapping(path="employee")
+    @PreAuthorize("hasRole('Admin')")
+    public String addEmployee(@RequestBody EmployeeDTO employeeDTO){
+        return "Sucess";
     }
 
 
