@@ -1,5 +1,6 @@
 package io.kubecloudsinc.kubecloudsapp.service.impl;
-
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 import io.kubecloudsinc.kubecloudsapp.dto.*;
 import io.kubecloudsinc.kubecloudsapp.model.Employee;
 import io.kubecloudsinc.kubecloudsapp.repository.EmployeeRepository;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
-    private final ModelMapper modelMapper;
+   // private final ModelMapper modelMapper;
 
 
     @Override
@@ -48,4 +49,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return employeeTableFieldsDTO;
     }
-}
+
+    @Override
+    public CreatedResponseDTO createEmployee(Employee employee) {
+        employeeRepository.save(employee);
+        return new CreatedResponseDTO("Created");
+    }
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
+
+    }
+
+
