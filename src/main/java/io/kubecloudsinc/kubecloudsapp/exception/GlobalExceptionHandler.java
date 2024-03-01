@@ -1,5 +1,6 @@
 package io.kubecloudsinc.kubecloudsapp.exception;
 
+import io.kubecloudsinc.kubecloudsapp.model.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +16,13 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleGlobalException(Exception ex, Model model) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
         log.error("An error occurred: {}", ex.getMessage(), ex);
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMessage("An error occurred: " + ex.getMessage());
+        errorResponse.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 
-        model.addAttribute("errorMessage", "An error occurred: " + ex.getMessage());
-        model.addAttribute("exception", ex);
-
-        return new ModelAndView("error");
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
