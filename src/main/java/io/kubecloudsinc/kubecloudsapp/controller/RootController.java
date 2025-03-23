@@ -6,13 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,6 +23,7 @@ public class RootController {
     private final DepartmentServiceImpl departmentService;
     private final LocationServiceImpl locationService;
     private final RegionServiceImpl regionService;
+    private final AppUserServiceImpl appUserService;
 
 
     private final ModelMapper modelMapper;
@@ -91,6 +90,10 @@ public class RootController {
         return Mono.just(modelMapper.map(regionService.getRegion(regionId), RegionDTO.class));
     }
 
-
+    @PostMapping(path = "appuser", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<AppUserDTO> createAppUser(@RequestBody @Valid AppUserDTO appUserDTO){
+        return appUserService.createUser(appUserDTO)
+                .map(appUser -> new AppUserDTO(appUser));
+    }
 
 }
